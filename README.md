@@ -1,13 +1,13 @@
 # ProSECFPs
 ProSECFPs is a tool for generating representations of protein sequences. This repository provides a Python script for computing ProSECFP descriptors using a predefined environment with all required dependencies.
 
-## Video explanation
+#### Video explanation
 
 An introductory lecture on ProSECFPs and related concepts by **Prof. Villoutreix** is available here:
 🎥 https://www.youtube.com/watch?v=K3wT_33e2Ao
 
 
-### Reference
+##### Reference
 If you use ProSECFPs in your research, please cite the following paper: 
 ProSECFPs: A Novel Fingerprint-Based Protein Representation Method for Missense Mutation Pathogenicity Prediction
 Clarissa Poles, Miriana Di Stefano, Lisa Piazza, Giulia Bononi, Giulio Poli, Marco Macchia, Tiziano Tuccinardi, and Antonio Giordano
