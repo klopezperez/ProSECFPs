@@ -3,8 +3,7 @@ ProSECFPs is a tool for generating representations of protein sequences. This re
 
 #### Video explanation
 
-An introductory lecture on ProSECFPs and related concepts by **Prof. Villoutreix** is available here:
-🎥 https://www.youtube.com/watch?v=K3wT_33e2Ao
+An introductory lecture on ProSECFPs and related concepts by **Prof. Villoutreix** is available here: 🎥 https://www.youtube.com/watch?v=K3wT_33e2Ao
 
 
 #### Citation
