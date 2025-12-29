@@ -7,7 +7,7 @@ An introductory lecture on ProSECFPs and related concepts by **Prof. Villoutreix
 🎥 https://www.youtube.com/watch?v=K3wT_33e2Ao
 
 
-##### Reference
+#### Citation
 If you use ProSECFPs in your research, please cite the following paper: 
 ProSECFPs: A Novel Fingerprint-Based Protein Representation Method for Missense Mutation Pathogenicity Prediction
 Clarissa Poles, Miriana Di Stefano, Lisa Piazza, Giulia Bononi, Giulio Poli, Marco Macchia, Tiziano Tuccinardi, and Antonio Giordano
