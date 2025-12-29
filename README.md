@@ -7,9 +7,7 @@ https://www.youtube.com/watch?v=K3wT_33e2Ao
 
 #### Citation 📄 
 If you use ProSECFPs in your research, please cite the following paper: 
-ProSECFPs: A Novel Fingerprint-Based Protein Representation Method for Missense Mutation Pathogenicity Prediction
-Clarissa Poles, Miriana Di Stefano, Lisa Piazza, Giulia Bononi, Giulio Poli, Marco Macchia, Tiziano Tuccinardi, and Antonio Giordano
-Journal of Chemical Information and Modeling 2025 65 (24), 13478-13492 DOI: 10.1021/acs.jcim.5c02437
+ProSECFPs: A Novel Fingerprint-Based Protein Representation Method for Missense Mutation Pathogenicity Prediction Clarissa Poles, Miriana Di Stefano, Lisa Piazza, Giulia Bononi, Giulio Poli, Marco Macchia, Tiziano Tuccinardi, and Antonio Giordano Journal of Chemical Information and Modeling 2025 65 (24), 13478-13492 DOI: 10.1021/acs.jcim.5c02437
 
 
 
