@@ -41,21 +41,45 @@ parser.add_argument(
     help="Path to the output NPY of .csv file where the computed descriptors will be saved. Default is 'output.npy'. The output will contain two columns: 'Sequences' (the input protein sequences) and 'C-ProSECFPs' (the corresponding descriptor vectors)."
 )
 
+parser.add_argument(
+    "-rad", "--radius",
+    type=int,
+    default=8,
+    help="Radius for the fingerprint calculation. Default is 8."
+)
+
+parser.add_argument(
+    "-bits", "--bits",
+    type=int,
+    default=1024,
+    help="Number of bits for the fingerprint vector. Default is 1024."
+)
+
+parser.add_argument(
+    "-type", "--fingerprint_type",
+    type=str,
+    default="binary",
+    help="Type of fingerprint to compute: 'binary' for B-ProSECFPs or 'count' for C-ProSECFPs. Default is 'binary'."
+)
+
 args = parser.parse_args()
 nj, input_dataset, output_dataset = args.n_jobs, args.input_dataset, args.output_dataset
 
-import pandas as pd
+import pandas as pd #type: ignore
 import numpy as np
-import joblib
+import joblib #type: ignore
 import hashlib
 import itertools
-from pandarallel import pandarallel
+from pandarallel import pandarallel #type: ignore
 
 # Configurable parameters
-radius = 12
-bits = 1024
+radius = args.radius
+bits = args.bits
 sequence_col = 'Sequences'
-fingerprint_type = 'Count-MorganFingerprint'  
+if args.fingerprint_type.lower() == 'binary':
+    fingerprint_type = 'Binary-MorganFingerprint'
+else:
+    fingerprint_type = 'Count-MorganFingerprint'  
 desc_dataset_path = 'descriptors.dump'
 
 # Initialization of pandarallel
@@ -141,7 +165,7 @@ dati['Concatenated'] = dati['Concatenated'].apply(safe_convert_to_int)
 if fingerprint_type == 'Count-MorganFingerprint':
     dati['C-ProSECFPs'] = dati['Concatenated'].parallel_apply(calculate_count_fingerprint)
     if output_dataset.endswith('.npy'):
-        output_np_array = np.array(dati['C-ProSECFPs'].tolist(), dtype=np.int64)
+        output_np_array = np.array(dati['C-ProSECFPs'].tolist(), dtype=np.int32)
         np.save(output_dataset, output_np_array)
     elif output_dataset.endswith('.csv'):
         output_df = dati[[sequence_col, 'C-ProSECFPs']]
@@ -149,7 +173,8 @@ if fingerprint_type == 'Count-MorganFingerprint':
 else:
     dati['B-ProSECFPs'] = dati['Concatenated'].parallel_apply(calculate_unique_fingerprint)
     if output_dataset.endswith('.npy'):
-        output_np_array = np.array(dati['B-ProSECFPs'].tolist(), dtype=np.int8)
+        output_np_array = np.array(dati['B-ProSECFPs'].tolist(), dtype=np.uint8)
+        output_np_array = np.packbits(output_np_array, axis=-1)
         np.save(output_dataset, output_np_array)
     elif output_dataset.endswith('.csv'):
         output_df = dati[[sequence_col, 'B-ProSECFPs']]
