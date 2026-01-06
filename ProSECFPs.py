@@ -37,8 +37,8 @@ parser.add_argument(
 parser.add_argument(
     "-out", "--output_dataset", 
     type=str, 
-    default="output.csv",
-    help="Path to the output CSV file where the computed descriptors will be saved. Default is 'output.csv'. The output will contain two columns: 'Sequences' (the input protein sequences) and 'C-ProSECFPs' (the corresponding descriptor vectors)."
+    default="output.npy",
+    help="Path to the output NPY of .csv file where the computed descriptors will be saved. Default is 'output.npy'. The output will contain two columns: 'Sequences' (the input protein sequences) and 'C-ProSECFPs' (the corresponding descriptor vectors)."
 )
 
 args = parser.parse_args()
@@ -140,14 +140,18 @@ dati['Concatenated'] = dati['Concatenated'].apply(safe_convert_to_int)
 # Calculation of Fingerprints
 if fingerprint_type == 'Count-MorganFingerprint':
     dati['C-ProSECFPs'] = dati['Concatenated'].parallel_apply(calculate_count_fingerprint)
-    output_df = dati[[sequence_col, 'C-ProSECFPs']]
+    if output_dataset.endswith('.npy'):
+        output_np_array = np.array(dati['C-ProSECFPs'].tolist(), dtype=np.int64)
+        np.save(output_dataset, output_np_array)
+    elif output_dataset.endswith('.csv'):
+        output_df = dati[[sequence_col, 'C-ProSECFPs']]
+        output_df.to_csv(output_dataset, index=False)
 else:
     dati['B-ProSECFPs'] = dati['Concatenated'].parallel_apply(calculate_unique_fingerprint)
-    output_df = dati[[sequence_col, 'B-ProSECFPs']]
-
-output_df.to_csv(output_dataset)
-print(output_df)
-print(f"Output saved as '{output_dataset}'")
-
-
+    if output_dataset.endswith('.npy'):
+        output_np_array = np.array(dati['B-ProSECFPs'].tolist(), dtype=np.int8)
+        np.save(output_dataset, output_np_array)
+    elif output_dataset.endswith('.csv'):
+        output_df = dati[[sequence_col, 'B-ProSECFPs']]
+        output_df.to_csv(output_dataset, index=False)
 
