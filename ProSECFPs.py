@@ -51,8 +51,8 @@ parser.add_argument(
 parser.add_argument(
     "-bits", "--bits",
     type=int,
-    default=1024,
-    help="Number of bits for the fingerprint vector. Default is 1024."
+    default=512,
+    help="Number of bits for the fingerprint vector. Default is 512."
 )
 
 parser.add_argument(
@@ -60,6 +60,13 @@ parser.add_argument(
     type=str,
     default="binary",
     help="Type of fingerprint to compute: 'binary' for B-ProSECFPs or 'count' for C-ProSECFPs. Default is 'binary'."
+)
+
+parser.add_argument(
+    "-seq_col", "--sequence_column",
+    type=str,
+    default="sequence_light",
+    help="Name of the column in the input CSV that contains the protein sequences. Default is 'sequence_light'."
 )
 
 args = parser.parse_args()
@@ -75,7 +82,7 @@ from pandarallel import pandarallel #type: ignore
 # Configurable parameters
 radius = args.radius
 bits = args.bits
-sequence_col = 'Sequences'
+sequence_col = args.sequence_column
 if args.fingerprint_type.lower() == 'binary':
     fingerprint_type = 'Binary-MorganFingerprint'
 else:
@@ -86,7 +93,7 @@ desc_dataset_path = 'descriptors.dump'
 pandarallel.initialize(progress_bar=True, nb_workers=nj)
 
 # Loading dataset
-dataset = pd.read_csv(input_dataset)
+dataset = pd.read_csv(input_dataset, skiprows=1)
 
 # Utility functions
 def create_fragments(sequence, n):
